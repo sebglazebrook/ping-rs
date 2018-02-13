@@ -14,7 +14,7 @@ Cos I know Rust and it should suit the project.
 
 __How do I hope to build it?__
 
-I'm going to try NOT to look at previously implemented ping codebases, and instead will read specifications and read [TCP/IP books](https://www.amazon.com/001-Illustrated-Protocols-Addison-Wesley-Professional/dp/0201633469).
+I'm going to try NOT to look at previously implemented ping codebases, and instead will read specifications and [TCP/IP books](https://www.amazon.com/001-Illustrated-Protocols-Addison-Wesley-Professional/dp/0201633469).
 
 ## Development
 
