@@ -1,13 +1,21 @@
 // First iteration, make one successful ping request with hardcoded destination and payload
 
 #[derive(Debug)]
-struct PingPacket;
+struct IpDatagram;
+
+#[derive(Debug)]
+struct PingPacket {
+    ip_datagram: IpDatagram,
+}
 
 impl PingPacket {
 
     pub fn new() -> Self {
         // TODO
-        PingPacket {}
+        // create an IP packet with the correct IP header
+        PingPacket {
+            ip_datagram: IpDatagram {},
+        }
     }
 }
 
@@ -28,7 +36,7 @@ impl NetworkLayer {
     pub fn listen_for_echo_response(&self) -> PingPacket {
         println!("Listening for echo responses");
         // TODO
-        PingPacket {  }
+        PingPacket::new()
     }
 }
 
