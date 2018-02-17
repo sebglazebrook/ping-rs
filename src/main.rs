@@ -78,6 +78,10 @@ impl PingPacket {
             ip_datagram: IpDatagram::new(),
         }
     }
+
+    pub fn into_bytes(&self) -> Vec<u8> {
+        vec![] // TODO return the real bytes
+    }
 }
 
 struct NetworkLayer;
@@ -85,12 +89,12 @@ struct NetworkLayer;
 impl NetworkLayer {
 
     pub fn new() -> Self {
-        // TODO
+        // TODO find the network interface we're going to use
         NetworkLayer {  }
     }
 
     pub fn send_packet(&self, packet: PingPacket) {
-        println!("Sending packet: {:?}", packet);
+        println!("Sending packet: {:?}", packet.into_bytes());
         // TODO
     }
 
