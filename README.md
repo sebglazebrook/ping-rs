@@ -18,7 +18,9 @@ I'm going to try NOT to look at previously implemented ping codebases, and inste
 
 ## Development
 
-TODO
+This repo uses [aliases](https://github.com/sebglazebrook/aliases) and all common dev tasks and tooling is included there.
+
+After cloning the repo just initialize the aliases `aliases init && aliases rehash` and you will have all the aliases available. See the aliases repo for more details on installing and using aliases.
 
 ## Contributing
 
