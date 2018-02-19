@@ -1,6 +1,22 @@
 // TODO future -> handle things other than IPv4
 // First iteration, make one successful ping request with hardcoded destination and payload
 
+#[derive(Debug)]
+struct IcmpPacket {
+    header: String, // 8 bytes
+    payload: String, // optional
+}
+
+impl IcmpPacket {
+
+    pub fn new() -> Self {
+        IcmpPacket {
+            header: String::new(),
+            payload: String::new(),
+        }
+    }
+}
+
 // TODO the IpHeader is big endian
 #[derive(Debug)]
 struct IpHeader {
@@ -49,7 +65,7 @@ impl IpHeader {
 struct IpDatagram {
     header: IpHeader,
     options: String, // 32 bit
-    data: String, // what's the bits??
+    data: IcmpPacket, // what's the bits??
 }
 
 impl IpDatagram {
@@ -58,7 +74,7 @@ impl IpDatagram {
         IpDatagram {
             header: IpHeader::new(),
             options: String::new(), // TODO as the name says, these are optional
-            data: String::new(), // TODO this will be the ICMP header and payload
+            data: IcmpPacket::new(),
         }
     }
 
