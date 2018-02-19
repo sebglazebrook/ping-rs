@@ -5,40 +5,40 @@
 #[derive(Debug)]
 struct IpHeader {
     // first 32-bits
-    version: String, // 4bits
-    header_length: String, // 4bits
-    type_of_service: String, // 8 bits
-    total_length: String, //16 bits
+    version: u8, // TODO convert to 4 bits
+    header_length: u8, // TODO convert to 4 bits
+    type_of_service: u8, // 8 bits
+    total_length: u16, // 16 bits
     // second 32-bits
-    identification: String, // 16 bits
-    flags: String, // 3 bits
-    fragment_offset: String, // 13 bits
+    identification: u16, // 16 bits
+    flags: u8, // need to end up being 3 bits
+    fragment_offset: u8, // 13 bits
     // third 32-bits
-    time_to_live: String, // 8 bits
-    protocol: String, // 8 bits
-    header_checksum: String, // 16 bits
+    time_to_live: u8, // 8 bits
+    protocol: u8, // 8 bits
+    header_checksum: u16, // 16 bits
     // forth 32-bits
-    source_address: String, // 32 bits
+    source_address: Vec<u8>, // 32 bits
     // fifth 32-bits
-    destination_address: String, // 32 bits
+    destination_address: Vec<u8>, // 32 bits
 }
 
 impl IpHeader {
 
     pub fn new() -> Self {
         IpHeader {
-            version: String::new(),
-            header_length: String::new(),
-            type_of_service: String::new(),
-            total_length: String::new(),
-            identification: String::new(),
-            flags: String::new(),
-            fragment_offset: String::new(),
-            time_to_live: String::new(),
-            protocol: String::new(),
-            header_checksum: String::new(),
-            source_address: String::new(),
-            destination_address: String::new(),
+            version: 0x0800, // TODO correct value ??
+            header_length: 84, // TODO this needs to be calculated properly
+            type_of_service: 0x0,
+            total_length: 98, // TODO this needs to be calculated properly
+            identification: 1, // some number that increments for every datagram
+            flags: 0b000, // TODO find the real value for this
+            fragment_offset: 0, // TODO this needs to be dynamic, it starts at zero through
+            time_to_live: 64, // TODO this should be configurable
+            protocol: 1, // ICMP
+            header_checksum: 6969, // TODO calculate this properly
+            source_address: String::from("127.0.0.1").into_bytes(), // TODO this should be configurable (currently localhost)
+            destination_address: String::from("216.58.200.110").into_bytes(), // TODO this should be configurable (currently google)
         }
 
     }
@@ -57,8 +57,8 @@ impl IpDatagram {
     pub fn new() -> Self {
         IpDatagram {
             header: IpHeader::new(),
-            options: String::new(),
-            data: String::new(),
+            options: String::new(), // TODO as the name says, these are optional
+            data: String::new(), // TODO this will be the ICMP header and payload
         }
     }
 
