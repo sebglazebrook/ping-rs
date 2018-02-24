@@ -1,3 +1,5 @@
+extern crate pnet;
+
 mod ping;
 use ping::{PingPacket, NetworkLayer};
 
