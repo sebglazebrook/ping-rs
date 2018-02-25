@@ -40,6 +40,11 @@ impl IcmpPacket {
             payload: String::new(),
         }
     }
+
+    pub fn into_bytes(&self) -> Vec<u8> {
+        vec![] // TODO return actual bytes
+    }
+
 }
 
 // TODO the IpHeader is big endian
@@ -83,6 +88,23 @@ impl IpHeader {
         }
 
     }
+
+    pub fn into_bytes(&self) -> Vec<u8> {
+        let mut payload = vec![];
+        payload.push(self.version);
+        payload.push(self.header_length);
+        payload.push(self.type_of_service);
+        // payload.push(self.total_length); // TODO need to convert from u16 - u8
+        // payload.push(self.identification); // TODO need to convert from u16 - u8
+        payload.push(self.flags);
+        payload.push(self.fragment_offset);
+        payload.push(self.time_to_live);
+        payload.push(self.protocol);
+        // payload.push(self.header_checksum); // TODO need to convert from u16 - u8
+        payload.extend(self.source_address.clone());
+        payload.extend(self.destination_address.clone());
+        payload
+    }
 }
 
 
@@ -103,6 +125,14 @@ impl IpDatagram {
         }
     }
 
+    pub fn into_bytes(&self) -> Vec<u8> {
+        let mut payload = vec![];
+        payload.extend(self.header.into_bytes());
+        payload.extend(self.options.clone().into_bytes());
+        payload.extend(self.data.into_bytes());
+        payload
+    }
+
 }
 
 #[derive(Debug)]
@@ -119,6 +149,6 @@ impl PingPacket {
     }
 
     pub fn into_bytes(&self) -> Vec<u8> {
-        vec![] // TODO return the real bytes
+        self.ip_datagram.into_bytes()
     }
 }
