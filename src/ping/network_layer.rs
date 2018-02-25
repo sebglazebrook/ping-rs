@@ -2,22 +2,22 @@ use pnet::datalink;
 use pnet::datalink::Channel::Ethernet;
 use ping::PingPacket;
 
-pub struct NetworkLayer;
+pub struct NetworkLayer {
+    interface: datalink::NetworkInterface,
+}
 
 impl NetworkLayer {
 
     pub fn new() -> Self {
-        // TODO find the network interface we're going to use
-        NetworkLayer {  }
+        NetworkLayer {
+            interface: datalink::interfaces().first().unwrap().clone(), // TODO this should be able to be dynamic
+        }
     }
 
     pub fn send_packet(&self, packet: PingPacket) {
-
         println!("Sending packet: {:?}", packet.into_bytes());
         // TODO below is just me hacking
-        let interfaces = datalink::interfaces();
-        let interface = interfaces.first().unwrap();
-        let (mut tx, mut rx) = match datalink::channel(&interface, datalink::Config::default()) {
+        let (mut tx, mut rx) = match datalink::channel(&self.interface, datalink::Config::default()) {
             Ok(Ethernet(tx, rx)) => (tx, rx),
             Ok(_) => panic!("Unhandled channel type"),
             Err(e) => panic!("An error occurred when creating the datalink channel: {}", e)
