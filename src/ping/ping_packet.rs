@@ -113,10 +113,8 @@ pub struct PingPacket {
 impl PingPacket {
 
     pub fn new() -> Self {
-        // TODO
-        // create an IP packet with the correct IP header
         PingPacket {
-            ip_datagram: IpDatagram::new(),
+            ip_datagram: IpDatagram::new(), // TODO create an IP packet with the correct IP header rather than hardcoding everything
         }
     }
 
