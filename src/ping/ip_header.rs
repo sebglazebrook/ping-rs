@@ -1,5 +1,6 @@
 use byteorder::{WriteBytesExt, BigEndian};
 // TODO future -> handle things other than IPv4
+// TODO First iteration, make one successful ping request with hardcoded destination and payload
 
 // TODO the IpHeader is big endian
 #[derive(Debug)]
