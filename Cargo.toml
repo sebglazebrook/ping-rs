@@ -8,6 +8,5 @@ name = "ping"
 path = "src/lib.rs"
 
 [dependencies]
-
-[dependencies.pnet]
-version = "0.20.0"
+byteorder = "1.2.1"
+pnet = "0.20.0"

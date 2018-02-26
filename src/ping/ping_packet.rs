@@ -1,5 +1,6 @@
 // TODO future -> handle things other than IPv4
 // First iteration, make one successful ping request with hardcoded destination and payload
+use byteorder::{WriteBytesExt, BigEndian};
 
 #[derive(Debug)]
 struct IcmpHeader {
@@ -84,7 +85,7 @@ impl IpHeader {
             protocol: 1, // ICMP
             header_checksum: 6969, // TODO calculate this properly
             source_address: String::from("127.0.0.1").into_bytes(), // TODO this should be configurable (currently localhost)
-            destination_address: String::from("216.58.200.110").into_bytes(), // TODO this should be configurable (currently google)
+            destination_address: String::from("192.160.0.69").into_bytes(), // TODO this should be configurable (currently google)
         }
 
     }
@@ -94,13 +95,27 @@ impl IpHeader {
         payload.push(self.version);
         payload.push(self.header_length);
         payload.push(self.type_of_service);
-        // payload.push(self.total_length); // TODO need to convert from u16 - u8
-        // payload.push(self.identification); // TODO need to convert from u16 - u8
+
+        // Converting total_length from u16 -> Vec<u8>
+        let mut total_length: Vec<u8> = Vec::new();
+        total_length.write_u16::<BigEndian>(self.total_length).unwrap();
+        payload.extend(total_length);
+
+        // Converting identification from u16 -> Vec<u8>
+        let mut identification: Vec<u8> = Vec::new();
+        identification.write_u16::<BigEndian>(self.identification).unwrap();
+        payload.extend(identification);
+
         payload.push(self.flags);
         payload.push(self.fragment_offset);
         payload.push(self.time_to_live);
         payload.push(self.protocol);
-        // payload.push(self.header_checksum); // TODO need to convert from u16 - u8
+
+        // Converting header_checksum from u16 -> Vec<u8>
+        let mut header_checksum: Vec<u8> = Vec::new();
+        header_checksum.write_u16::<BigEndian>(self.header_checksum);
+        payload.extend(header_checksum);
+
         payload.extend(self.source_address.clone());
         payload.extend(self.destination_address.clone());
         payload

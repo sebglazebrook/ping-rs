@@ -1,4 +1,5 @@
 extern crate pnet;
+extern crate byteorder;
 
 mod ping;
 use ping::{PingPacket, NetworkLayer};
